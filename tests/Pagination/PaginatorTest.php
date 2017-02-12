@@ -5,13 +5,13 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Tests\Pagination;
 
-use Mockery as m;
 use Spiral\Pagination\CountingInterface;
+use Spiral\Pagination\PagedInterface;
 use Spiral\Pagination\Paginator;
 use Spiral\Pagination\PaginatorInterface;
-use Spiral\Pagination\PagedInterface;
 
 class PaginatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,6 +22,12 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PaginatorInterface::class, $paginator);
         $this->assertInstanceOf(CountingInterface::class, $paginator);
         $this->assertInstanceOf(PagedInterface::class, $paginator);
+    }
+
+    public function testParameterTracking()
+    {
+        $paginator = new Paginator(25, 0, 'request:page');
+        $this->assertSame('request:page', $paginator->getParameter());
     }
 
     public function testLimit()

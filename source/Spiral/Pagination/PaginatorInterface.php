@@ -26,4 +26,11 @@ interface PaginatorInterface
      * @return int
      */
     public function getOffset(): int;
+
+    /**
+     * Get parameter paginator depends on. Environment specific.
+     *
+     * @return null|string
+     */
+    public function getParameter();
 }
