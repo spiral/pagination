@@ -31,6 +31,13 @@ trait PaginatorTrait
     private $paginator;
 
     /**
+     * Indication that pagination was already counted.
+     *
+     * @var bool
+     */
+    private $counted = false;
+
+    /**
      * Indication that object was paginated.
      *
      * @return bool
@@ -61,19 +68,27 @@ trait PaginatorTrait
      * @see hasPaginator()
      * @see paginate()
      *
+     * @param bool $reset When set to true pagination will re-count results in selection.
+     *
      * @return PaginatorInterface
      */
-    public function getPaginator(): PaginatorInterface
+    public function getPaginator(bool $reset = true): PaginatorInterface
     {
         if (!$this->hasPaginator()) {
             throw new PaginationException("Unable to get paginator, no paginator were set");
         }
 
-        if ($this instanceof \Countable) {
-            return $this->configurePaginator($this->count());
+        $paginator = $this->paginator;
+
+        if (!$this->counted || $reset) {
+            if ($this instanceof \Countable && $paginator instanceof CountingInterface) {
+                $paginator = $paginator->withCount($this->count());
+                $this->counted = true;
+                $this->paginator = $paginator;
+            }
         }
 
-        return $this->paginator;
+        return clone $paginator;
     }
 
     /**
@@ -113,28 +128,4 @@ trait PaginatorTrait
      * @return ContainerInterface
      */
     abstract protected function iocContainer();
-
-    /**
-     * Get paginator instance configured for a given count. Must not affect already associated
-     * paginator instance.
-     *
-     * Attention: this method MUST be called from a child class in order to properly set paginator
-     * counts IF paginator support it.
-     *
-     * @param int|null $count Can be skipped.
-     *
-     * @return PaginatorInterface
-     */
-    private function configurePaginator(int $count = null): PaginatorInterface
-    {
-        $paginator = $this->getPaginator();
-
-        if (!empty($count) && $paginator instanceof CountingInterface) {
-            $paginator = $paginator->withCount($count);
-        } else {
-            $paginator = clone $paginator;
-        }
-
-        return $paginator;
-    }
 }
