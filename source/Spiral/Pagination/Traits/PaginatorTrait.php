@@ -55,7 +55,8 @@ trait PaginatorTrait
     }
 
     /**
-     * Get paginator for the current selection. Paginate method should be already called.
+     * Get paginator for the current selection. Paginator will be automatically configured with
+     * count value if parent countable.
      *
      * @see hasPaginator()
      * @see paginate()
@@ -66,6 +67,10 @@ trait PaginatorTrait
     {
         if (!$this->hasPaginator()) {
             throw new PaginationException("Unable to get paginator, no paginator were set");
+        }
+
+        if ($this instanceof \Countable) {
+            return $this->configurePaginator($this->count());
         }
 
         return $this->paginator;
@@ -105,6 +110,11 @@ trait PaginatorTrait
     }
 
     /**
+     * @return ContainerInterface
+     */
+    abstract protected function iocContainer();
+
+    /**
      * Get paginator instance configured for a given count. Must not affect already associated
      * paginator instance.
      *
@@ -115,7 +125,7 @@ trait PaginatorTrait
      *
      * @return PaginatorInterface
      */
-    protected function configurePaginator(int $count = null): PaginatorInterface
+    private function configurePaginator(int $count = null): PaginatorInterface
     {
         $paginator = $this->getPaginator();
 
@@ -127,9 +137,4 @@ trait PaginatorTrait
 
         return $paginator;
     }
-
-    /**
-     * @return ContainerInterface
-     */
-    abstract protected function iocContainer();
 }
