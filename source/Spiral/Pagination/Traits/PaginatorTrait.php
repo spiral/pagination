@@ -35,7 +35,7 @@ trait PaginatorTrait
      *
      * @var bool
      */
-    private $counted = false;
+    private $prepared = false;
 
     /**
      * Indication that object was paginated.
@@ -78,17 +78,11 @@ trait PaginatorTrait
             throw new PaginationException("Unable to get paginator, no paginator were set");
         }
 
-        $paginator = $this->paginator;
-
-        if (!$this->counted || $reset) {
-            if ($this instanceof \Countable && $paginator instanceof CountingInterface) {
-                $paginator = $paginator->withCount($this->count());
-                $this->counted = true;
-                $this->paginator = $paginator;
-            }
+        if (!$this->prepared || $reset) {
+            $this->paginator = $this->preparePaginator($this->paginator);
         }
 
-        return clone $paginator;
+        return clone $this->paginator;
     }
 
     /**
@@ -128,4 +122,19 @@ trait PaginatorTrait
      * @return ContainerInterface
      */
     abstract protected function iocContainer();
+
+    /**
+     * @param PaginatorInterface $paginator
+     *
+     * @return PaginatorInterface
+     */
+    private function preparePaginator(PaginatorInterface $paginator): PaginatorInterface
+    {
+        $this->prepared = true;
+        if ($this instanceof \Countable && $paginator instanceof CountingInterface) {
+            return $paginator->withCount($this->count());
+        }
+
+        return $paginator;
+    }
 }
