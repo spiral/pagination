@@ -68,21 +68,21 @@ trait PaginatorTrait
      * @see hasPaginator()
      * @see paginate()
      *
-     * @param bool $reset When set to true pagination will re-count results in selection.
+     * @param bool $prepare Set to true to calculate pagination window.
      *
      * @return PaginatorInterface
      */
-    public function getPaginator(bool $reset = true): PaginatorInterface
+    public function getPaginator(bool $prepare = true): PaginatorInterface
     {
         if (!$this->hasPaginator()) {
             throw new PaginationException("Unable to get paginator, no paginator were set");
         }
 
-        if (!$this->prepared || $reset) {
+        if (!$this->prepared || $prepare) {
             $this->paginator = $this->preparePaginator($this->paginator);
         }
 
-        return clone $this->paginator;
+        return $this->paginator;
     }
 
     /**
