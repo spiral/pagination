@@ -36,13 +36,29 @@ class Paginator implements PagedInterface, \Countable
     private $count = 0;
 
     /**
+     * @var string|null
+     */
+    private $parameter = null;
+
+    /**
      * @param int $limit
      * @param int $count
      */
-    public function __construct(int $limit = 25, int $count = 0)
+    public function __construct(int $limit = 25, int $count = 0, string $parameter = null)
     {
         $this->limit = $limit;
         $this->count = $count;
+        $this->parameter = $parameter;
+    }
+
+    /**
+     * Get parameter paginator depends on. Environment specific.
+     *
+     * @return null|string
+     */
+    public function getParameter()
+    {
+        return $this->parameter;
     }
 
     /**
