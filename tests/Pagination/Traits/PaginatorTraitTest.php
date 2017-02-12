@@ -84,17 +84,4 @@ class PaginatorTraitTest extends \PHPUnit_Framework_TestCase
         $this->trait->paginate();
     }
 
-    public function testConfigurePaginator()
-    {
-        $reflection = new \ReflectionObject($this->trait);
-        $method = $reflection->getMethod('getPaginator');
-        $method->setAccessible(true);
-
-        $this->trait->setPaginator($this->paginator);
-        $this->assertNotSame($this->paginator, $method->invoke($this->trait));
-        $this->assertNotSame(
-            $this->paginator,
-            $method->invoke($this->trait, self::PAGINATOR_COUNT)
-        );
-    }
 }
