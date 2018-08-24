@@ -13,31 +13,19 @@ namespace Spiral\Pagination;
  */
 class Paginator implements PagedInterface, \Countable
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $pageNumber = 1;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $countPages = 1;
 
-    /**
-     * Pagination limit.
-     *
-     * @var int
-     */
+    /** @var int */
     private $limit = 25;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $count = 0;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $parameter = null;
 
     /**
@@ -57,7 +45,7 @@ class Paginator implements PagedInterface, \Countable
      *
      * @return null|string
      */
-    public function getParameter()
+    public function getParameter(): ?string
     {
         return $this->parameter;
     }

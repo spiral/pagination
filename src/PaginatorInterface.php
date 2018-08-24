@@ -32,5 +32,5 @@ interface PaginatorInterface
      *
      * @return null|string
      */
-    public function getParameter();
+    public function getParameter(): ?string;
 }
