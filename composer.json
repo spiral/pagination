@@ -10,10 +10,10 @@
     }
   ],
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spiral/core": "^1.0"
   },
   "require-dev": {
-    "spiral/core": "^1.0",
     "phpunit/phpunit": "~7.0",
     "mockery/mockery": "^1.1"
   },

@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Tests\Pagination;
+namespace Spiral\Pagination\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Spiral\Pagination\CountingInterface;

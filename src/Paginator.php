@@ -41,8 +41,9 @@ class Paginator implements PagedInterface, \Countable
     private $parameter = null;
 
     /**
-     * @param int $limit
-     * @param int $count
+     * @param int         $limit
+     * @param int         $count
+     * @param string|null $parameter
      */
     public function __construct(int $limit = 25, int $count = 0, string $parameter = null)
     {

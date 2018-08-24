@@ -36,10 +36,7 @@ interface PaginatorAwareInterface
      * Potentially to be renamed to getPaginator method since this method does not create paginator
      * automatically.
      *
-     * @see paginate()
-     *
      * @return PaginatorInterface
-     *
      * @throws PaginationException
      */
     public function getPaginator(): PaginatorInterface;

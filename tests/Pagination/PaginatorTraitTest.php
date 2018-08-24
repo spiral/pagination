@@ -1,15 +1,17 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author    Dmitry Mironov <dmitry.mironov@spiralscout.com>
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Tests\Pagination\Traits;
+namespace Spiral\Pagination\Tests;
 
-
-use Interop\Container\ContainerInterface;
+use function foo\func;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
+use Spiral\Core\ContainerScope;
 use Spiral\Core\Exceptions\ScopeException;
 use Spiral\Pagination\Exceptions\PaginationException;
 use Spiral\Pagination\Paginator;
@@ -47,42 +49,49 @@ class PaginatorTraitTest extends TestCase
         $this->trait = $this->getMockForTrait(PaginatorTrait::class);
         $this->container = $this->createMock(ContainerInterface::class);
         $this->paginator = $this->createMock(Paginator::class);
-
-        $this->trait->method('iocContainer')->willReturn($this->container);
     }
 
     public function testSetPaginator()
     {
-        $this->assertFalse($this->trait->hasPaginator());
-        $this->assertEquals($this->trait, $this->trait->setPaginator($this->paginator));
-        $this->assertTrue($this->trait->hasPaginator());
-        $this->assertEquals($this->paginator, $this->trait->getPaginator());
+        ContainerScope::globalScope($this->container, function () {
+            $this->assertFalse($this->trait->hasPaginator());
+            $this->assertEquals($this->trait, $this->trait->setPaginator($this->paginator));
+            $this->assertTrue($this->trait->hasPaginator());
+            $this->assertEquals($this->paginator, $this->trait->getPaginator());
+        });
     }
 
     public function testGetPaginatorWasNotSetException()
     {
-        $this->expectException(PaginationException::class);
-        $this->trait->getPaginator();
+        ContainerScope::globalScope($this->container, function () {
+            $this->expectException(PaginationException::class);
+            $this->trait->getPaginator();
+        });
     }
 
     public function testPaginate()
     {
-        $paginators = $this->createMock(PaginatorsInterface::class);
-        $paginators->method('createPaginator')
-            ->with(static::PAGINATOR_PARAMETER, static::PAGINATOR_LIMIT)
-            ->willReturn($this->paginator);
+        ContainerScope::globalScope($this->container, function () {
+            $paginators = $this->createMock(PaginatorsInterface::class);
+            $paginators->method('createPaginator')
+                ->with(static::PAGINATOR_PARAMETER, static::PAGINATOR_LIMIT)
+                ->willReturn($this->paginator);
 
-        $this->container->method('has')->with(PaginatorsInterface::class)->willReturn(true);
-        $this->container->method('get')->with(PaginatorsInterface::class)->willReturn($paginators);
+            $this->container->method('has')->with(PaginatorsInterface::class)->willReturn(true);
+            $this->container->method('get')->with(PaginatorsInterface::class)->willReturn($paginators);
 
-        $this->assertEquals($this->trait,
-            $this->trait->paginate(static::PAGINATOR_LIMIT, static::PAGINATOR_PARAMETER));
+            $this->assertEquals(
+                $this->trait,
+                $this->trait->paginate(static::PAGINATOR_LIMIT, static::PAGINATOR_PARAMETER)
+            );
+        });
     }
 
     public function testPaginateScopeExceptionNoContainer()
     {
-        $this->expectException(ScopeException::class);
-        $this->trait->paginate();
+        ContainerScope::globalScope($this->container, function () {
+            $this->expectException(ScopeException::class);
+            $this->trait->paginate();
+        });
     }
-
 }

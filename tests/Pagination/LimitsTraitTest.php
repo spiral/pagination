@@ -1,12 +1,12 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author    Dmitry Mironov <dmitry.mironov@spiralscout.com>
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Tests\Pagination\Traits;
-
+namespace Spiral\Pagination\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Spiral\Pagination\Traits\LimitsTrait;

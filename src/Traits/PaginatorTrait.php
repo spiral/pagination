@@ -8,7 +8,7 @@
 
 namespace Spiral\Pagination\Traits;
 
-use Interop\Container\ContainerInterface;
+use Spiral\Core\ContainerScope;
 use Spiral\Core\Exceptions\ScopeException;
 use Spiral\Pagination\CountingInterface;
 use Spiral\Pagination\Exceptions\PaginationException;
@@ -16,8 +16,8 @@ use Spiral\Pagination\PaginatorInterface;
 use Spiral\Pagination\PaginatorsInterface;
 
 /**
- * Provides ability to paginate associated instance. Will work with default Paginator or fetch one
- * from container.
+ * Provides ability to paginate associated instance. Trait is able to automatically create paginator using active
+ * container scope.
  *
  * Compatible with PaginatorAwareInterface.
  */
@@ -89,39 +89,27 @@ trait PaginatorTrait
      * Paginate current selection using Paginator class.
      *
      * @param int    $limit     Pagination limit.
-     * @param string $parameter Name of parameter to associate paginator with, by default query
-     *                          parameter of active request to be used.
+     * @param string $parameter Name of parameter to associate paginator with, by default query parameter of active
+     *                          request to be used.
      *
      * @return $this
-     *
      * @throws ScopeException
      */
     public function paginate(int $limit = 25, string $parameter = 'page')
     {
         //We are required to fetch paginator from associated container or shared container
-        $container = $this->iocContainer();
-
+        $container = ContainerScope::getContainer();
         if (empty($container) || !$container->has(PaginatorsInterface::class)) {
             throw new ScopeException(
-                'Unable to create paginator, PaginatorsInterface binding is missing or container not set'
+                'Unable to create paginator, `PaginatorsInterface` binding is missing or container scope is not set'
             );
         }
 
-        /**
-         * @var PaginatorsInterface $factory
-         */
-        $factory = $container->get(PaginatorsInterface::class);
-
         //Now we can create new instance of paginator using factory
-        $this->paginator = $factory->createPaginator($parameter, $limit);
+        $this->paginator = $container->get(PaginatorsInterface::class)->createPaginator($parameter, $limit);
 
         return $this;
     }
-
-    /**
-     * @return ContainerInterface
-     */
-    abstract protected function iocContainer();
 
     /**
      * @param PaginatorInterface $paginator
