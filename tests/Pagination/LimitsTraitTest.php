@@ -8,6 +8,7 @@
 namespace Spiral\Tests\Pagination\Traits;
 
 
+use PHPUnit\Framework\TestCase;
 use Spiral\Pagination\Traits\LimitsTrait;
 
 /**
@@ -15,12 +16,12 @@ use Spiral\Pagination\Traits\LimitsTrait;
  *
  * @package Spiral\Tests\Pagination\Traits
  */
-class LimitsTraitTest extends \PHPUnit_Framework_TestCase
+class LimitsTraitTest extends TestCase
 {
-    const DEFAULT_LIMIT  = 0;
+    const DEFAULT_LIMIT = 0;
     const DEFAULT_OFFSET = 0;
-    const LIMIT          = 10;
-    const OFFSET         = 15;
+    const LIMIT = 10;
+    const OFFSET = 15;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|LimitsTrait

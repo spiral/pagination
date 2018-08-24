@@ -9,6 +9,7 @@ namespace Spiral\Tests\Pagination\Traits;
 
 
 use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 use Spiral\Core\Exceptions\ScopeException;
 use Spiral\Pagination\Exceptions\PaginationException;
 use Spiral\Pagination\Paginator;
@@ -20,10 +21,10 @@ use Spiral\Pagination\Traits\PaginatorTrait;
  *
  * @package Spiral\Tests\Pagination\Traits
  */
-class PaginatorTraitTest extends \PHPUnit_Framework_TestCase
+class PaginatorTraitTest extends TestCase
 {
-    const PAGINATOR_LIMIT     = 10;
-    const PAGINATOR_COUNT     = 15;
+    const PAGINATOR_LIMIT = 10;
+    const PAGINATOR_COUNT = 15;
     const PAGINATOR_PARAMETER = 'test';
 
     /**

@@ -8,12 +8,13 @@
 
 namespace Spiral\Tests\Pagination;
 
+use PHPUnit\Framework\TestCase;
 use Spiral\Pagination\CountingInterface;
 use Spiral\Pagination\PagedInterface;
 use Spiral\Pagination\Paginator;
 use Spiral\Pagination\PaginatorInterface;
 
-class PaginatorTest extends \PHPUnit_Framework_TestCase
+class PaginatorTest extends TestCase
 {
     public function testInterfaces()
     {

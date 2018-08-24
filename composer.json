@@ -10,22 +10,16 @@
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.1"
   },
   "require-dev": {
-    "spiral/common": "^1.0",
-    "phpunit/phpunit": "~5.0",
-    "mockery/mockery": "^0.9.4"
+    "spiral/core": "^1.0",
+    "phpunit/phpunit": "~7.0",
+    "mockery/mockery": "^1.1"
   },
   "autoload": {
     "psr-4": {
-      "Spiral\\": "source/Spiral/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Spiral\\Tests\\": "tests/"
+      "Spiral\\Pagination\\": "src/"
     }
   }
 }
-

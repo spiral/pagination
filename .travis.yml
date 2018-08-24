@@ -10,7 +10,7 @@ before_install:
   - psql -c 'create database spiral;' -U postgres
 
 install:
-  - composer install --no-interaction --prefer-source
+  - composer install --no-interaction --prefer-src
 
 script:
-  - phpunit
+  - vendor/bin/phpunit
