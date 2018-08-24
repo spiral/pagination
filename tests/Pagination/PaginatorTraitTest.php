@@ -8,7 +8,6 @@
 
 namespace Spiral\Pagination\Tests;
 
-use function foo\func;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Spiral\Core\ContainerScope;
