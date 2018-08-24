@@ -97,8 +97,8 @@ trait PaginatorTrait
      */
     public function paginate(int $limit = 25, string $parameter = 'page')
     {
-        //We are required to fetch paginator from associated container or shared container
         $container = ContainerScope::getContainer();
+
         if (empty($container) || !$container->has(PaginatorsInterface::class)) {
             throw new ScopeException(
                 'Unable to create paginator, `PaginatorsInterface` binding is missing or container scope is not set'
