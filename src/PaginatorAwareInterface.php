@@ -8,7 +8,7 @@
 
 namespace Spiral\Pagination;
 
-use Spiral\Pagination\Exceptions\PaginationException;
+use Spiral\Pagination\Exception\PaginationException;
 
 /**
  * Provides ability to associate paginator and execute pagination when needed.

@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Pagination\Exceptions;
+namespace Spiral\Pagination\Exception;
 
 /**
  * Generic pagination error.

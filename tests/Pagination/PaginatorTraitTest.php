@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Spiral\Core\ContainerScope;
 use Spiral\Core\Exceptions\ScopeException;
-use Spiral\Pagination\Exceptions\PaginationException;
+use Spiral\Pagination\Exception\PaginationException;
 use Spiral\Pagination\Paginator;
 use Spiral\Pagination\PaginatorsInterface;
 use Spiral\Pagination\Traits\PaginatorTrait;

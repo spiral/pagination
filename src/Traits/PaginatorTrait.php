@@ -11,7 +11,7 @@ namespace Spiral\Pagination\Traits;
 use Spiral\Core\ContainerScope;
 use Spiral\Core\Exceptions\ScopeException;
 use Spiral\Pagination\CountingInterface;
-use Spiral\Pagination\Exceptions\PaginationException;
+use Spiral\Pagination\Exception\PaginationException;
 use Spiral\Pagination\PaginatorInterface;
 use Spiral\Pagination\PaginatorsInterface;
 
