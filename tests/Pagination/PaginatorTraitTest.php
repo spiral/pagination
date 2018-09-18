@@ -52,7 +52,7 @@ class PaginatorTraitTest extends TestCase
 
     public function testSetPaginator()
     {
-        ContainerScope::globalScope($this->container, function () {
+        ContainerScope::runScope($this->container, function () {
             $this->assertFalse($this->trait->hasPaginator());
             $this->assertEquals($this->trait, $this->trait->setPaginator($this->paginator));
             $this->assertTrue($this->trait->hasPaginator());
@@ -62,7 +62,7 @@ class PaginatorTraitTest extends TestCase
 
     public function testGetPaginatorWasNotSetException()
     {
-        ContainerScope::globalScope($this->container, function () {
+        ContainerScope::runScope($this->container, function () {
             $this->expectException(PaginationException::class);
             $this->trait->getPaginator();
         });
@@ -70,7 +70,7 @@ class PaginatorTraitTest extends TestCase
 
     public function testPaginate()
     {
-        ContainerScope::globalScope($this->container, function () {
+        ContainerScope::runScope($this->container, function () {
             $paginators = $this->createMock(PaginatorsInterface::class);
             $paginators->method('createPaginator')
                 ->with(static::PAGINATOR_PARAMETER, static::PAGINATOR_LIMIT)
@@ -88,7 +88,7 @@ class PaginatorTraitTest extends TestCase
 
     public function testPaginateScopeExceptionNoContainer()
     {
-        ContainerScope::globalScope($this->container, function () {
+        ContainerScope::runScope($this->container, function () {
             $this->expectException(ScopeException::class);
             $this->trait->paginate();
         });
