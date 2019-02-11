@@ -11,7 +11,6 @@ namespace Spiral\Pagination\Tests;
 use PHPUnit\Framework\TestCase;
 use Spiral\Pagination\Exception\PaginationException;
 use Spiral\Pagination\Paginator;
-use Spiral\Pagination\PaginatorsInterface;
 use Spiral\Pagination\Traits\PaginatorTrait;
 
 /**
