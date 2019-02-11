@@ -15,23 +15,10 @@ namespace Spiral\Pagination;
 interface PaginatorInterface
 {
     /**
-     * Get pagination limit value.
+     * Paginate the target selection.
      *
-     * @return int
+     * @param PaginableInterface $target
+     * @return PaginableInterface
      */
-    public function getLimit(): int;
-
-    /**
-     * Get calculated offset value.
-     *
-     * @return int
-     */
-    public function getOffset(): int;
-
-    /**
-     * Get parameter paginator depends on. Environment specific.
-     *
-     * @return null|string
-     */
-    public function getParameter(): ?string;
+    public function paginate(PaginableInterface $target): PaginableInterface;
 }

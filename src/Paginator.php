@@ -12,7 +12,7 @@ namespace Spiral\Pagination;
 /**
  * Simple predictable paginator.
  */
-class Paginator implements PagedInterface, \Countable
+class Paginator implements PaginatorInterface, \Countable
 {
     /** @var int */
     private $pageNumber = 1;
@@ -56,7 +56,7 @@ class Paginator implements PagedInterface, \Countable
      *
      * @return self
      */
-    public function withLimit(int $limit): PagedInterface
+    public function withLimit(int $limit): self
     {
         $paginator = clone $this;
         $paginator->limit = $limit;
@@ -75,13 +75,25 @@ class Paginator implements PagedInterface, \Countable
     /**
      * {@inheritdoc}
      */
-    public function withPage(int $number): PagedInterface
+    public function withPage(int $number): self
     {
         $paginator = clone $this;
         $paginator->pageNumber = max($number, 0);
 
         //Real page number
         return $paginator;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return self
+     */
+    public function withCount(int $count): self
+    {
+        $paginator = clone $this;
+
+        return $paginator->setCount($count);
     }
 
     /**
@@ -109,25 +121,18 @@ class Paginator implements PagedInterface, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return self
+     * @inheritdoc
      */
-    public function withCount(int $count): CountableInterface
+    public function paginate(PaginableInterface $target): PaginableInterface
     {
-        $paginator = clone $this;
+        if ($target instanceof \Countable && $this->count === 0) {
+            $this->setCount($target->count());
+        }
 
-        return $paginator->setCount($count);
-    }
+        $target->limit($this->getLimit());
+        $target->offset($this->getOffset());
 
-    /**
-     * Alias for count.
-     *
-     * @return int
-     */
-    public function getCount(): int
-    {
-        return $this->count;
+        return $target;
     }
 
     /**

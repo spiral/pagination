@@ -9,8 +9,6 @@
 namespace Spiral\Pagination\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Pagination\CountableInterface;
-use Spiral\Pagination\PagedInterface;
 use Spiral\Pagination\Paginator;
 use Spiral\Pagination\PaginatorInterface;
 
@@ -21,8 +19,6 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(25);
 
         $this->assertInstanceOf(PaginatorInterface::class, $paginator);
-        $this->assertInstanceOf(CountableInterface::class, $paginator);
-        $this->assertInstanceOf(PagedInterface::class, $paginator);
     }
 
     public function testParameterTracking()
@@ -45,8 +41,8 @@ class PaginatorTest extends TestCase
     {
         $paginator = new Paginator(25);
 
-        $this->assertSame(0, $paginator->getCount());
-        $this->assertSame($paginator->count(), $paginator->getCount());
+        $this->assertSame(0, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
         $this->assertSame($paginator->count(), count($paginator));
 
         $this->assertSame(1, $paginator->getPage());
@@ -65,8 +61,8 @@ class PaginatorTest extends TestCase
         $this->assertSame(null, $paginator->previousPage());
         $this->assertSame(2, $paginator->nextPage());
 
-        $this->assertSame(100, $paginator->getCount());
-        $this->assertSame($paginator->count(), $paginator->getCount());
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
         $this->assertSame($paginator->count(), count($paginator));
 
         $this->assertSame(0, $paginator->getOffset());
@@ -80,8 +76,8 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(25);
         $paginator = $paginator->withCount(110);
 
-        $this->assertSame(110, $paginator->getCount());
-        $this->assertSame($paginator->count(), $paginator->getCount());
+        $this->assertSame(110, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
         $this->assertSame($paginator->count(), count($paginator));
 
         $this->assertSame(1, $paginator->getPage());
@@ -113,8 +109,8 @@ class PaginatorTest extends TestCase
         $this->assertSame(3, $paginator->previousPage());
         $this->assertSame(null, $paginator->nextPage());
 
-        $this->assertSame(100, $paginator->getCount());
-        $this->assertSame($paginator->count(), $paginator->getCount());
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
         $this->assertSame($paginator->count(), count($paginator));
 
         $this->assertSame(75, $paginator->getOffset());
@@ -130,8 +126,8 @@ class PaginatorTest extends TestCase
 
         $this->assertSame(1, $paginator->getPage());
 
-        $this->assertSame(100, $paginator->getCount());
-        $this->assertSame($paginator->count(), $paginator->getCount());
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
         $this->assertSame($paginator->count(), count($paginator));
     }
 
@@ -146,7 +142,7 @@ class PaginatorTest extends TestCase
         $this->assertSame(null, $paginator->previousPage());
         $this->assertSame(null, $paginator->nextPage());
 
-        $this->assertSame(0, $paginator->getCount());
+        $this->assertSame(0, $paginator->count());
         $this->assertSame(0, $paginator->getOffset());
         $this->assertSame(1, $paginator->countPages());
         $this->assertSame(0, $paginator->countDisplayed());
@@ -157,7 +153,7 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(25);
         $paginator = $paginator->withCount(110);
 
-        $this->assertSame(110, $paginator->getCount());
+        $this->assertSame(110, $paginator->count());
         $this->assertSame(1, $paginator->getPage());
 
         $paginator = $paginator->withPage(100);
