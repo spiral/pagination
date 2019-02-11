@@ -81,7 +81,7 @@ class PaginatorTraitTest extends TestCase
 
             $this->assertEquals(
                 $this->trait,
-                $this->trait->paginate(static::PAGINATOR_LIMIT, static::PAGINATOR_PARAMETER)
+                $this->trait->setPaginator(static::PAGINATOR_LIMIT, static::PAGINATOR_PARAMETER)
             );
         });
     }
@@ -90,7 +90,7 @@ class PaginatorTraitTest extends TestCase
     {
         ContainerScope::runScope($this->container, function () {
             $this->expectException(ScopeException::class);
-            $this->trait->paginate();
+            $this->trait->setPaginator();
         });
     }
 }

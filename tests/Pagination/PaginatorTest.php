@@ -9,7 +9,7 @@
 namespace Spiral\Pagination\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Pagination\CountingInterface;
+use Spiral\Pagination\CountableInterface;
 use Spiral\Pagination\PagedInterface;
 use Spiral\Pagination\Paginator;
 use Spiral\Pagination\PaginatorInterface;
@@ -21,7 +21,7 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(25);
 
         $this->assertInstanceOf(PaginatorInterface::class, $paginator);
-        $this->assertInstanceOf(CountingInterface::class, $paginator);
+        $this->assertInstanceOf(CountableInterface::class, $paginator);
         $this->assertInstanceOf(PagedInterface::class, $paginator);
     }
 

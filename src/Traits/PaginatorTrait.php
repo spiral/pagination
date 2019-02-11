@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -8,18 +9,12 @@
 
 namespace Spiral\Pagination\Traits;
 
-use Spiral\Core\ContainerScope;
-use Spiral\Core\Exception\ScopeException;
-use Spiral\Pagination\CountingInterface;
+use Spiral\Pagination\CountableInterface;
 use Spiral\Pagination\Exception\PaginationException;
 use Spiral\Pagination\PaginatorInterface;
-use Spiral\Pagination\PaginatorsInterface;
 
 /**
- * Provides ability to paginate associated instance. Trait is able to automatically create paginator using active
- * container scope.
- *
- * Compatible with PaginatorAwareInterface.
+ * Gives the ability to paginate object.
  */
 trait PaginatorTrait
 {
@@ -48,10 +43,9 @@ trait PaginatorTrait
     }
 
     /**
-     * Manually set paginator instance for specific object.
+     * Paginate current selection using Paginator class.
      *
      * @param PaginatorInterface $paginator
-     *
      * @return $this
      */
     public function setPaginator(PaginatorInterface $paginator)
@@ -66,7 +60,7 @@ trait PaginatorTrait
      * count value if parent countable.
      *
      * @see hasPaginator()
-     * @see paginate()
+     * @see setPaginator()
      *
      * @param bool $prepare Set to true to calculate pagination window.
      *
@@ -86,33 +80,6 @@ trait PaginatorTrait
     }
 
     /**
-     * Paginate current selection using Paginator class.
-     *
-     * @param int    $limit     Pagination limit.
-     * @param string $parameter Name of parameter to associate paginator with, by default query parameter of active
-     *                          request to be used.
-     *
-     * @deprecated
-     * @return $this
-     * @throws ScopeException
-     */
-    public function paginate(int $limit = 25, string $parameter = 'page')
-    {
-        $container = ContainerScope::getContainer();
-
-        if (empty($container) || !$container->has(PaginatorsInterface::class)) {
-            throw new ScopeException(
-                'Unable to create paginator, `PaginatorsInterface` binding is missing or container scope is not set'
-            );
-        }
-
-        //Now we can create new instance of paginator using factory
-        $this->paginator = $container->get(PaginatorsInterface::class)->createPaginator($parameter, $limit);
-
-        return $this;
-    }
-
-    /**
      * @param PaginatorInterface $paginator
      *
      * @return PaginatorInterface
@@ -120,7 +87,7 @@ trait PaginatorTrait
     private function preparePaginator(PaginatorInterface $paginator): PaginatorInterface
     {
         $this->prepared = true;
-        if ($this instanceof \Countable && $paginator instanceof CountingInterface) {
+        if ($this instanceof \Countable && $paginator instanceof CountableInterface) {
             return $paginator->withCount($this->count());
         }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -11,7 +12,7 @@ namespace Spiral\Pagination;
 /**
  * Paginator with predictable length (count).
  */
-interface PagedInterface extends CountingInterface
+interface PagedInterface extends CountableInterface
 {
     /**
      * Set pagination limit. Immutable.

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -112,7 +113,7 @@ class Paginator implements PagedInterface, \Countable
      *
      * @return self
      */
-    public function withCount(int $count): CountingInterface
+    public function withCount(int $count): CountableInterface
     {
         $paginator = clone $this;
 

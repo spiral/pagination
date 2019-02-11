@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -11,7 +12,7 @@ namespace Spiral\Pagination;
 /**
  * Paginator with dependency on count of items.
  */
-interface CountingInterface extends PaginatorInterface
+interface CountableInterface extends PaginatorInterface
 {
     /**
      * Get instance of paginator with a given count. Must not affect existed paginator.
