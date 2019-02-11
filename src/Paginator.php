@@ -123,16 +123,17 @@ class Paginator implements PaginatorInterface, \Countable
     /**
      * @inheritdoc
      */
-    public function paginate(PaginableInterface $target): PaginableInterface
+    public function paginate(PaginableInterface $target): PaginatorInterface
     {
-        if ($target instanceof \Countable && $this->count === 0) {
-            $this->setCount($target->count());
+        $paginator = clone $this;
+        if ($target instanceof \Countable && $paginator->count === 0) {
+            $paginator->setCount($target->count());
         }
 
-        $target->limit($this->getLimit());
-        $target->offset($this->getOffset());
+        $target->limit($paginator->getLimit());
+        $target->offset($paginator->getOffset());
 
-        return $target;
+        return $paginator;
     }
 
     /**

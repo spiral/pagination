@@ -15,10 +15,10 @@ namespace Spiral\Pagination;
 interface PaginatorInterface
 {
     /**
-     * Paginate the target selection.
+     * Paginate the target selection and return new paginator instance.
      *
      * @param PaginableInterface $target
-     * @return PaginableInterface
+     * @return PaginatorInterface
      */
-    public function paginate(PaginableInterface $target): PaginableInterface;
+    public function paginate(PaginableInterface $target): PaginatorInterface;
 }
