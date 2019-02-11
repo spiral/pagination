@@ -92,6 +92,7 @@ trait PaginatorTrait
      * @param string $parameter Name of parameter to associate paginator with, by default query parameter of active
      *                          request to be used.
      *
+     * @deprecated
      * @return $this
      * @throws ScopeException
      */
