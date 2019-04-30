@@ -1,17 +1,18 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Pagination;
 
 /**
  * Simple predictable paginator.
  */
-class Paginator implements PaginatorInterface, \Countable
+final class Paginator implements PaginatorInterface, \Countable
 {
     /** @var int */
     private $pageNumber = 1;

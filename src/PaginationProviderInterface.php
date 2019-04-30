@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Pagination;
 
@@ -12,7 +13,7 @@ namespace Spiral\Pagination;
  * Responsible for paginator creation based on a given pagination parameter (parameter in this case
  * is an abstract definition which might depend on specific implementation if needed).
  */
-interface PaginatorsInterface
+interface PaginationProviderInterface
 {
     /**
      * Create paginator for a given parameter, scope request must be resolved automatically.
