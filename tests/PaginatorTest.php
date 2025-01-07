@@ -14,45 +14,45 @@ class PaginatorTest extends TestCase
     {
         $paginator = new Paginator(limit: 25);
 
-        self::assertInstanceOf(PaginatorInterface::class, $paginator);
+        $this->assertInstanceOf(PaginatorInterface::class, $paginator);
     }
 
     public function testParameterTracking(): void
     {
         $paginator = new Paginator(limit: 25, count: 0, parameter: 'request:page');
-        self::assertSame('request:page', $paginator->getParameter());
+        $this->assertSame('request:page', $paginator->getParameter());
     }
 
     public function testLimit(): void
     {
         $paginator = new Paginator(limit: 25);
 
-        self::assertSame(25, $paginator->getLimit());
+        $this->assertSame(25, $paginator->getLimit());
         $newPaginator = $paginator->withLimit(50);
-        self::assertSame(25, $paginator->getLimit());
-        self::assertSame(50, $newPaginator->getLimit());
+        $this->assertSame(25, $paginator->getLimit());
+        $this->assertSame(50, $newPaginator->getLimit());
     }
 
     public function testLimitWithCounts(): void
     {
         $paginator = new Paginator(limit: 25, count: 100);
 
-        self::assertCount(100, $paginator);
-        self::assertSame(4, $paginator->countPages());
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame(4, $paginator->countPages());
     }
 
     public function testCountsAndPages(): void
     {
         $paginator = new Paginator(limit: 25);
 
-        self::assertCount(0, $paginator);
-        self::assertCount($paginator->count(), $paginator);
-        self::assertCount($paginator->count(), $paginator);
+        $this->assertSame(0, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
+        $this->assertSame($paginator->count(), count($paginator));
 
-        self::assertSame(1, $paginator->getPage());
-        self::assertSame(0, $paginator->getOffset());
-        self::assertSame(1, $paginator->countPages());
-        self::assertSame(0, $paginator->countDisplayed());
+        $this->assertSame(1, $paginator->getPage());
+        $this->assertSame(0, $paginator->getOffset());
+        $this->assertSame(1, $paginator->countPages());
+        $this->assertSame(0, $paginator->countDisplayed());
     }
 
     public function testFirstPage(): void
@@ -60,18 +60,18 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(limit: 25);
         $paginator = $paginator->withCount(100);
 
-        self::assertSame(1, $paginator->getPage());
+        $this->assertSame(1, $paginator->getPage());
 
-        self::assertNull($paginator->previousPage());
-        self::assertSame(2, $paginator->nextPage());
+        $this->assertSame(null, $paginator->previousPage());
+        $this->assertSame(2, $paginator->nextPage());
 
-        self::assertCount(100, $paginator);
-        self::assertCount($paginator->count(), $paginator);
-        self::assertCount($paginator->count(), $paginator);
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
+        $this->assertSame($paginator->count(), count($paginator));
 
-        self::assertSame(0, $paginator->getOffset());
-        self::assertSame(4, $paginator->countPages());
-        self::assertSame(25, $paginator->countDisplayed());
+        $this->assertSame(0, $paginator->getOffset());
+        $this->assertSame(4, $paginator->countPages());
+        $this->assertSame(25, $paginator->countDisplayed());
     }
 
     public function testSecondPage(): void
@@ -79,21 +79,21 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(limit: 25);
         $paginator = $paginator->withCount(110);
 
-        self::assertCount(110, $paginator);
-        self::assertCount($paginator->count(), $paginator);
-        self::assertCount($paginator->count(), $paginator);
+        $this->assertSame(110, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
+        $this->assertSame($paginator->count(), count($paginator));
 
-        self::assertSame(1, $paginator->getPage());
+        $this->assertSame(1, $paginator->getPage());
 
         $paginator = $paginator->withPage(2);
 
-        self::assertSame(1, $paginator->previousPage());
-        self::assertSame(3, $paginator->nextPage());
+        $this->assertSame(1, $paginator->previousPage());
+        $this->assertSame(3, $paginator->nextPage());
 
-        self::assertSame(2, $paginator->getPage());
-        self::assertSame(25, $paginator->getOffset());
-        self::assertSame(5, $paginator->countPages());
-        self::assertSame(25, $paginator->countDisplayed());
+        $this->assertSame(2, $paginator->getPage());
+        $this->assertSame(25, $paginator->getOffset());
+        $this->assertSame(5, $paginator->countPages());
+        $this->assertSame(25, $paginator->countDisplayed());
     }
 
     public function testLastPage(): void
@@ -101,24 +101,24 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(limit: 25);
         $paginator = $paginator->withCount(100);
 
-        self::assertSame(1, $paginator->getPage());
+        $this->assertSame(1, $paginator->getPage());
 
-        self::assertNull($paginator->previousPage());
-        self::assertSame(2, $paginator->nextPage());
+        $this->assertSame(null, $paginator->previousPage());
+        $this->assertSame(2, $paginator->nextPage());
 
         $paginator = $paginator->withPage(100);
 
-        self::assertSame(4, $paginator->getPage());
-        self::assertSame(3, $paginator->previousPage());
-        self::assertNull($paginator->nextPage());
+        $this->assertSame(4, $paginator->getPage());
+        $this->assertSame(3, $paginator->previousPage());
+        $this->assertSame(null, $paginator->nextPage());
 
-        self::assertCount(100, $paginator);
-        self::assertCount($paginator->count(), $paginator);
-        self::assertCount($paginator->count(), $paginator);
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
+        $this->assertSame($paginator->count(), count($paginator));
 
-        self::assertSame(75, $paginator->getOffset());
-        self::assertSame(4, $paginator->countPages());
-        self::assertSame(25, $paginator->countDisplayed());
+        $this->assertSame(75, $paginator->getOffset());
+        $this->assertSame(4, $paginator->countPages());
+        $this->assertSame(25, $paginator->countDisplayed());
     }
 
     public function testNegativePage(): void
@@ -127,11 +127,11 @@ class PaginatorTest extends TestCase
         $paginator = $paginator->withCount(100);
         $paginator = $paginator->withPage(-1);
 
-        self::assertSame(1, $paginator->getPage());
+        $this->assertSame(1, $paginator->getPage());
 
-        self::assertCount(100, $paginator);
-        self::assertCount($paginator->count(), $paginator);
-        self::assertCount($paginator->count(), $paginator);
+        $this->assertSame(100, $paginator->count());
+        $this->assertSame($paginator->count(), $paginator->count());
+        $this->assertSame($paginator->count(), count($paginator));
     }
 
     public function testNegativeCount(): void
@@ -140,15 +140,15 @@ class PaginatorTest extends TestCase
         $paginator = $paginator->withCount(-100);
 
         $paginator = $paginator->withPage(-10);
-        self::assertSame(1, $paginator->getPage());
+        $this->assertSame(1, $paginator->getPage());
 
-        self::assertNull($paginator->previousPage());
-        self::assertNull($paginator->nextPage());
+        $this->assertSame(null, $paginator->previousPage());
+        $this->assertSame(null, $paginator->nextPage());
 
-        self::assertCount(0, $paginator);
-        self::assertSame(0, $paginator->getOffset());
-        self::assertSame(1, $paginator->countPages());
-        self::assertSame(0, $paginator->countDisplayed());
+        $this->assertSame(0, $paginator->count());
+        $this->assertSame(0, $paginator->getOffset());
+        $this->assertSame(1, $paginator->countPages());
+        $this->assertSame(0, $paginator->countDisplayed());
     }
 
     public function testLastPageNumber(): void
@@ -156,16 +156,19 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(limit: 25);
         $paginator = $paginator->withCount(110);
 
-        self::assertCount(110, $paginator);
-        self::assertSame(1, $paginator->getPage());
+        $this->assertSame(110, $paginator->count());
+        $this->assertSame(1, $paginator->getPage());
 
         $paginator = $paginator->withPage(100);
 
-        self::assertSame($paginator->countPages(), $paginator->getPage());
-        self::assertSame(($paginator->getPage() - 1) * $paginator->getLimit(), $paginator->getOffset());
+        $this->assertSame($paginator->countPages(), $paginator->getPage());
+        $this->assertSame(
+            ($paginator->getPage() - 1) * $paginator->getLimit(),
+            $paginator->getOffset()
+        );
 
-        self::assertSame(5, $paginator->countPages());
-        self::assertSame(10, $paginator->countDisplayed());
+        $this->assertSame(5, $paginator->countPages());
+        $this->assertSame(10, $paginator->countDisplayed());
     }
 
     public function testIsRequired(): void
@@ -173,12 +176,12 @@ class PaginatorTest extends TestCase
         $paginator = new Paginator(limit: 25);
 
         $paginator = $paginator->withCount(24);
-        self::assertFalse($paginator->isRequired());
+        $this->assertFalse($paginator->isRequired());
 
         $paginator = $paginator->withCount(25);
-        self::assertFalse($paginator->isRequired());
+        $this->assertFalse($paginator->isRequired());
 
         $paginator = $paginator->withCount(26);
-        self::assertTrue($paginator->isRequired());
+        $this->assertTrue($paginator->isRequired());
     }
 }
